@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para mi choricitos 🌻</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      padding: 2rem;
+    }
+
+    .scene {
+      width: 440px;
+    }
+
+    /* ── CARTA CERRADA ── */
+    .card-closed {
+      background: #fff9f0;
+      border-radius: 18px;
+      border: 2px solid #e8d5b0;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      cursor: pointer;
+      box-shadow: 4px 6px 18px rgba(0,0,0,0.13);
+      transition: transform 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+    .card-closed:hover {
+      transform: translateY(-5px) rotate(-0.5deg);
+      box-shadow: 6px 12px 26px rgba(0,0,0,0.18);
+    }
+
+    .card-title {
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: #6b4226;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.8rem;
+    }
+
+    .hint {
+      text-align: center;
+      margin-top: 0.8rem;
+      font-size: 12px;
+      color: #a09080;
+      font-family: sans-serif;
+    }
+
+    /* ── CARTA ABIERTA ── */
+    .card-open {
+      display: none;
+      background: #fff9f0;
+      border-radius: 18px;
+      border: 2px solid #e8d5b0;
+      box-shadow: 4px 6px 18px rgba(0,0,0,0.13);
+      overflow: hidden;
+      animation: unfold 0.45s ease forwards;
+    }
+    .card-open.visible { display: flex; }
+
+    @keyframes unfold {
+      from { opacity: 0; transform: scaleY(0.4) translateY(-20px); transform-origin: top; }
+      to   { opacity: 1; transform: scaleY(1) translateY(0); }
+    }
+
+    /* Mitad izquierda */
+    .card-left {
+      width: 46%;
+      padding: 1.6rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-right: 2px dashed #e8d5b0;
+      background: #fffbf5;
+    }
+
+    .photo-slot {
+      width: 100%;
+      max-width: 190px;
+      aspect-ratio: 4/5;
+      border-radius: 12px;
+      border: 2px solid #d4b896;
+      overflow: hidden;
+      background: #f0e6d3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      cursor: pointer;
+      position: relative;
+    }
+    .photo-slot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .photo-slot .placeholder {
+      font-size: 11px;
+      color: #b8956a;
+      text-align: center;
+      padding: 0 1rem;
+      font-family: sans-serif;
+    }
+    .photo-slot .upload-icon { font-size: 28px; }
+    #fileInput { display: none; }
+
+    /* Mitad derecha */
+    .card-right {
+      width: 54%;
+      padding: 1.8rem 1.4rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .quote {
+      font-size: 10.5px;
+      color: #a08060;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.55;
+      max-width: 160px;
+    }
+
+    .hint-close {
+      font-size: 11px;
+      color: #c4a882;
+      text-align: center;
+      cursor: pointer;
+      font-family: sans-serif;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .hint-close:hover { color: #9b7a55; }
+  </style>
+</head>
+<body>
+
+<div class="scene">
+
+  <!-- ═══ CARTA CERRADA ═══ -->
+  <div class="card-closed" id="cardClosed" onclick="openCard()">
+    <div class="card-title">Para mi choricitos 🌻</div>
+
+    <svg viewBox="0 0 320 200" width="100%" style="max-width:320px; display:block; margin:0 auto;">
+      <defs>
+        <filter id="wobble">
+          <feTurbulence type="fractalNoise" baseFrequency="0.065" numOctaves="2" seed="3" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+      </defs>
+
+      <!-- Tallos -->
+      <g filter="url(#wobble)" stroke="#4a7c3f" stroke-width="3.5" fill="none" stroke-linecap="round">
+        <path d="M80 190 C78 165 74 145 77 120"/>
+        <path d="M160 195 C158 170 162 148 160 118"/>
+        <path d="M240 190 C242 168 238 148 241 118"/>
+        <!-- hojas -->
+        <path d="M79 160 C60 152 52 140 58 130 C62 140 72 148 79 155"/>
+        <path d="M161 162 C180 154 188 142 184 132 C178 142 169 150 161 158"/>
+        <path d="M241 158 C222 150 214 138 218 128 C222 138 232 146 240 153"/>
+      </g>
+
+      <!-- Girasol izquierdo -->
+      <g transform="translate(77,108) rotate(-8)" filter="url(#wobble)">
+        <g fill="#f5c518" stroke="#c9a00a" stroke-width="1">
+          <ellipse cx="0" cy="-22" rx="7" ry="14"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(40)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(80)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(120)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(160)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(200)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(240)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(280)"/>
+          <ellipse cx="0" cy="-22" rx="7" ry="14" transform="rotate(320)"/>
+        </g>
+        <circle cx="0" cy="0" r="14" fill="#5c3317" stroke="#3a1f0a" stroke-width="1.5"/>
+        <circle cx="-4" cy="-3" r="2"   fill="#7a4a2a" opacity="0.7"/>
+        <circle cx="3"  cy="2"  r="2.5" fill="#7a4a2a" opacity="0.6"/>
+        <circle cx="-1" cy="5"  r="1.5" fill="#7a4a2a" opacity="0.5"/>
+        <circle cx="5"  cy="-5" r="1.8" fill="#7a4a2a" opacity="0.6"/>
+      </g>
+
+      <!-- Girasol central -->
+      <g transform="translate(160,105) rotate(5)" filter="url(#wobble)">
+        <g fill="#f7d020" stroke="#c8a010" stroke-width="1">
+          <ellipse cx="0" cy="-24" rx="8" ry="15"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(36)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(108)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(252)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(288)"/>
+          <ellipse cx="0" cy="-24" rx="8" ry="15" transform="rotate(324)"/>
+        </g>
+        <circle cx="0"  cy="0"  r="16"  fill="#4a2a0f" stroke="#2e1a08" stroke-width="1.5"/>
+        <circle cx="-5" cy="-4" r="2.5" fill="#6a3820" opacity="0.65"/>
+        <circle cx="4"  cy="3"  r="2"   fill="#6a3820" opacity="0.7"/>
+        <circle cx="-2" cy="6"  r="2"   fill="#6a3820" opacity="0.55"/>
+        <circle cx="6"  cy="-6" r="2.2" fill="#6a3820" opacity="0.6"/>
+        <circle cx="-7" cy="4"  r="1.8" fill="#6a3820" opacity="0.5"/>
+      </g>
+
+      <!-- Girasol derecho -->
+      <g transform="translate(241,110) rotate(10)" filter="url(#wobble)">
+        <g fill="#f0c010" stroke="#c08a00" stroke-width="1">
+          <ellipse cx="0" cy="-21" rx="7" ry="13"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(45)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(90)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(135)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(225)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(270)"/>
+          <ellipse cx="0" cy="-21" rx="7" ry="13" transform="rotate(315)"/>
+        </g>
+        <circle cx="0"  cy="0"  r="13"  fill="#522d10" stroke="#341c07" stroke-width="1.5"/>
+        <circle cx="-3" cy="-3" r="2"   fill="#723d22" opacity="0.7"/>
+        <circle cx="4"  cy="2"  r="2.3" fill="#723d22" opacity="0.6"/>
+        <circle cx="0"  cy="5"  r="1.8" fill="#723d22" opacity="0.55"/>
+      </g>
+
+      <!-- Hierba base -->
+      <g filter="url(#wobble)" stroke="#5a8a40" stroke-width="2" fill="none" stroke-linecap="round">
+        <path d="M50 198 C48 185 55 175 58 168"/>
+        <path d="M110 200 C112 188 106 178 104 172"/>
+        <path d="M200 198 C198 186 204 176 206 170"/>
+        <path d="M280 200 C282 187 276 178 274 172"/>
+      </g>
+    </svg>
+  </div>
+  <p class="hint">✉️ Haz clic en la carta para abrirla</p>
+
+  <!-- ═══ CARTA ABIERTA ═══ -->
+  <div class="card-open" id="cardOpen">
+
+    <!-- Lado izquierdo: foto -->
+    <div class="card-left">
+      <div class="photo-slot" onclick="document.getElementById('fileInput').click()">
+        <img id="photoPreview" alt="Foto de los dos" src="foto.jpeg" style="display:block;"/>
+      </div>
+      <input type="file" id="fileInput" accept="image/*" onchange="loadPhoto(event)"/>
+    </div>
+
+    <!-- Lado derecho: texto crayón -->
+    <div class="card-right">
+      <svg viewBox="0 0 210 130" width="100%" style="max-width:210px; overflow:visible;">
+        <defs>
+          <filter id="crayon" x="-10%" y="-10%" width="120%" height="120%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04 0.06" numOctaves="4" seed="7" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
+            <feMorphology in="displaced" operator="dilate" radius="0.8" result="thick"/>
+            <feBlend in="thick" in2="displaced" mode="multiply"/>
+          </filter>
+        </defs>
+
+        <!-- ALEX en rosa -->
+        <text x="18" y="55"
+              font-family="'Comic Sans MS','Chalkboard SE',cursive"
+              font-size="44" font-weight="900" fill="#e8567a"
+              filter="url(#crayon)"
+              transform="rotate(-3,18,55)">ALEX</text>
+
+        <!-- y minúscula -->
+        <text x="88" y="80"
+              font-family="'Comic Sans MS','Chalkboard SE',cursive"
+              font-size="36" font-weight="900" fill="#7a5c42"
+              filter="url(#crayon)"
+              transform="rotate(2,88,80)">y</text>
+
+        <!-- JHON en azul cielo -->
+        <text x="18" y="118"
+              font-family="'Comic Sans MS','Chalkboard SE',cursive"
+              font-size="44" font-weight="900" fill="#5aabdc"
+              filter="url(#crayon)"
+              transform="rotate(3,18,118)">JHON</text>
+
+        <!-- corazón -->
+        <text x="166" y="88" font-family="serif" font-size="38" fill="#e8567a"
+              filter="url(#crayon)">♥</text>
+      </svg>
+
+      <p class="quote">
+        "un pequeño intento de lo que dibujamos aquel día en five guys"
+      </p>
+
+      <button class="hint-close" onclick="closeCard()">← cerrar carta</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function openCard() {
+    document.getElementById('cardClosed').style.display = 'none';
+    document.querySelector('.hint').style.display = 'none';
+    document.getElementById('cardOpen').classList.add('visible');
+  }
+
+  function closeCard() {
+    document.getElementById('cardClosed').style.display = '';
+    document.querySelector('.hint').style.display = '';
+    document.getElementById('cardOpen').classList.remove('visible');
+  }
+
+  function loadPhoto(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.getElementById('photoPreview');
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('uploadIcon').style.display = 'none';
+      document.getElementById('uploadText').style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+</body>
+</html>
